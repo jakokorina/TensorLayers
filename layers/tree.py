@@ -13,8 +13,8 @@ class TreeLayer(nn.Module):
         self.output_shape = (2,) * output_dim
 
         self.entangler_first_layer = [
-            nn.Parameter(torch.normal(mean, std, (rank, rank, rank, rank), requires_grad=True)),
-            *[nn.Parameter(torch.normal(mean, std, (rank, rank, rank), requires_grad=True)) for _ in range(3)]
+            nn.Parameter(torch.normal(mean, std, (2, 2, rank, rank), requires_grad=True)),
+            *[nn.Parameter(torch.normal(mean, std, (2, 2, rank), requires_grad=True)) for _ in range(3)]
         ]
 
         self.entangler_second_layer = [

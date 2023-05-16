@@ -19,7 +19,10 @@ class MERALayer(nn.Module):
             nn.Parameter(torch.normal(mean, std, (2, 2, rank, rank), requires_grad=True))
         ]
         self.entangler_first_layer = [
-            nn.Parameter(torch.normal(mean, std, (rank, rank, rank), requires_grad=True)) for _ in range(4)
+            nn.Parameter(torch.normal(mean, std, (2, rank, rank), requires_grad=True)),
+            nn.Parameter(torch.normal(mean, std, (rank, rank, rank), requires_grad=True)),
+            nn.Parameter(torch.normal(mean, std, (rank, rank, rank), requires_grad=True)),
+            nn.Parameter(torch.normal(mean, std, (rank, 2, rank), requires_grad=True)),
         ]
 
         self.disentangler_second_layer = nn.Parameter(
