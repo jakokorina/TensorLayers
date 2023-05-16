@@ -18,11 +18,12 @@ class TreeLayer(nn.Module):
         ]
 
         self.entangler_second_layer = [
-            nn.Parameter(torch.normal(mean, std, (rank, rank, rank, rank), requires_grad=True)) for _ in range(2)
+            nn.Parameter(torch.normal(mean, std, (rank, rank, 2, rank), requires_grad=True)),
+            nn.Parameter(torch.normal(mean, std, (rank, rank, rank, 2), requires_grad=True))
         ]
 
         self.entangler_third_layer = nn.Parameter(
-            torch.normal(mean, std, (rank, rank, rank, rank), requires_grad=True))
+            torch.normal(mean, std, (rank, rank, 2, 2), requires_grad=True))
 
         self.bias = nn.Parameter(torch.normal(mean, std, (1, 2 ** output_dim), requires_grad=True))
         self.register_parameter("bias", self.bias)

@@ -6,10 +6,9 @@ import tensornetwork as tn
 class MERALayer(nn.Module):
     def __init__(self, rank: int = 2):
         super().__init__()
-        mean: float = 0.0
-        std: float = 0.5
-        input_dim: int = 9
-        output_dim: int = 4
+        mean, std = 0.0, 0.5
+        input_dim = 9
+        output_dim = 4
         self.input_shape = (2,) * input_dim
         self.output_shape = (2,) * output_dim
 
@@ -28,11 +27,12 @@ class MERALayer(nn.Module):
         self.disentangler_second_layer = nn.Parameter(
             torch.normal(mean, std, (rank, rank, rank, rank), requires_grad=True))
         self.entangler_second_layer = [
-            nn.Parameter(torch.normal(mean, std, (rank, rank, rank, rank), requires_grad=True)) for _ in range(2)
+            nn.Parameter(torch.normal(mean, std, (rank, rank, 2, rank), requires_grad=True)),
+            nn.Parameter(torch.normal(mean, std, (rank, rank, rank, 2), requires_grad=True))
         ]
 
         self.entangler_third_layer = nn.Parameter(
-            torch.normal(mean, std, (rank, rank, rank, rank), requires_grad=True))
+            torch.normal(mean, std, (rank, rank, 2, 2), requires_grad=True))
 
         self.bias = nn.Parameter(torch.normal(mean, std, (1, 2 ** output_dim), requires_grad=True))
         self.register_parameter("bias", self.bias)
